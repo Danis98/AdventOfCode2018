@@ -1,0 +1,46 @@
+#ip 5
+seti 123 0 1        0   r1 = 123
+bani 1 456 1        1   r1 &= 456
+eqri 1 72 1         2   r1 = r1==72
+addr 1 5 5          3   ip += r1
+seti 0 0 5          4   ip = 0
+seti 0 0 1          5   r1 = 0
+bori 1 65536 2      6   r2 = r1 | 65536     B1
+seti 6663054 1 1    7   r1 = 6663054
+bani 2 255 4        8   r4 = r2 & 255       B2
+addr 1 4 1          9   r1 += r4
+bani 1 16777215 1   10  r1 &= 16777215
+muli 1 65899 1      11  r1 *= 65899
+bani 1 16777215 1   12  r1 &= 16777215
+gtir 256 2 4        13  r4 = 256>r2
+addr 4 5 5          14  ip += r4
+addi 5 1 5          15  ip += 1
+seti 27 6 5         16  ip = 27
+seti 0 6 4          17  r4 = 0
+addi 4 1 3          18  r3 = r4 + 1        B3
+muli 3 256 3        19  r3 *= 256
+gtrr 3 2 3          20  r3 = r3>r2
+addr 3 5 5          21  ip += r3
+addi 5 1 5          22  ip += 1
+seti 25 9 5         23  ip = 25
+addi 4 1 4          24  r4 += 1
+seti 17 3 5         25  ip = 17             E3
+setr 4 4 2          26  r2 = r4
+seti 7 2 5          27  ip = 7              E2
+eqrr 1 0 4          28  r4 = r0==r1
+addr 4 5 5          29  ip += r4
+seti 5 8 5          30  ip = 5              E1
+
+r1 = 123 & 456
+if r1 != 72: loop forever
+r1 = 0
+do:
+    r2 = r1 | 0x10000 // just one bit
+    r1 = 0x65AB8E
+    do:
+        r1 = (((r1 + r2 & 0xFF) & 0xFFFFFF) * 0x1016B) & 0xFFFFFF
+        if 256>r2:
+            break
+        r2 = r2 >> 8
+    while True
+while r0 != r1
